@@ -1,0 +1,48 @@
+buildscript {
+    ext{
+        kotlin_version = '1.2.21'
+        dependencyManagementVersion = '1.0.3.RELEASE'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath ("io.spring.gradle:dependency-management-plugin:$dependencyManagementVersion")
+    }
+}
+
+group 'parallel'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 1.8
+
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'io.projectreactor:reactor-core'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+dependencyManagement {
+    imports {
+        mavenBom "io.projectreactor:reactor-bom:Bismuth-RELEASE"
+    }
+}
